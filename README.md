@@ -6,7 +6,7 @@ Absolutely! Let's add some flair with stickers and enhance the guide further:
 
 Welcome to Arzino, your go-to solution for creating and managing blockchain tokens online. Arzino is a free and open-source project developed for a competition event. With Arzino, you can effortlessly create custom blockchain tokens, perform airdrops, transfer tokens, and track transactions, all in one place.
 
-![Arzino Logo](https://example.com/arzino-logo.png)
+![Arzino Logo](https://rezakakeimobin.s3.ir-thr-at1.arvanstorage.ir/logo.png?versionId=)
 
 ## ✨ Features
 
