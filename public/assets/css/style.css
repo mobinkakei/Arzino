@@ -1,0 +1,20 @@
+/* Font Family Link */
+
+@font-face {
+    font-family: 'Moraba';
+    src: url('../font/AriaWeb-Regular.woff') format('woff');
+    font-weight: normal;
+  }
+  
+  @font-face {
+    font-family: 'Moraba';
+    src: url('../font//AriaWeb-Bold.woff') format('woff');
+    font-weight: bold;
+  }
+
+@import "custom/_reboot.css";
+@import "custom/_navbar.css";
+@import "custom/_swiper.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
