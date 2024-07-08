@@ -1,22 +1,17 @@
 import React, { FC, useEffect, useCallback, useState } from "react";
 import useUserSOLBalanceStore from "../../stores/useUserSOLBalanceStore";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
-import {
-  LAMPORTS_PER_SOL,
-  TransactionSignature,
-  publicKey,
-  Transaction,
-  SystemProgram
-}
-  from "@solana/web3.js";
+import { LAMPORTS_PER_SOL, TransactionSignature, PublicKey, Transaction, SystemProgram } from "@solana/web3.js";
 import { notify } from "../../utils/notifications";
 import { AiOutlineClose } from "react-icons/ai";
 import { InputView } from "views/input";
 import Branding from "components/Branding";
-import { Signature } from "ethers";
 
+interface DonateViewProps {
+  setOpenSendTransaction: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export const DonateView = ({ setOpenSendTransaction }) => {
+export const DonateView: FC<DonateViewProps> = ({ setOpenSendTransaction }) => {
   const wallet = useWallet();
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
@@ -24,6 +19,7 @@ export const DonateView = ({ setOpenSendTransaction }) => {
 
   const balance = useUserSOLBalanceStore((s) => s.balance);
   const { getUserSOLBalance } = useUserSOLBalanceStore();
+
   useEffect(() => {
     if (wallet.publicKey) {
       getUserSOLBalance(wallet.publicKey, connection);
@@ -34,47 +30,50 @@ export const DonateView = ({ setOpenSendTransaction }) => {
     if (!publicKey) {
       notify({
         type: "error",
-        message: "Sorry Error",
-        description: "Wallet not connected",
+        message: "ارتباط قطع است",
+        description: "اتصال میف پول خود را بررسی کرده و مجددا تلاش کنید",
       });
       return;
     }
 
-    const creatorAddress = new publicKey("Devnet Address Wallet");
+    const creatorAddress = new PublicKey("Devnet Address Wallet");
     let signature: TransactionSignature = "";
 
     try {
-      const transition = new Transaction().add(
+      const transaction = new Transaction().add(
         SystemProgram.transfer({
           fromPubkey: publicKey,
           toPubkey: creatorAddress,
           lamports: LAMPORTS_PER_SOL * Number(amount),
         })
       );
-      signature = await sendTransaction(transition, connection);
+      signature = await sendTransaction(transaction, connection);
       notify({
         type: "success",
-        message: `You have successfully transfered ${amount}`,
+        message: `شما با موفقیت مقدار ${amount} را به کیف پول مورد نظر ارسال کردید`,
         txid: signature,
       });
       return;
     } catch (error: any) {
       notify({
         type: "error",
-        message: "Trans failed",
+        message: "انتقال با شکست مواجه شد ",
         description: error?.message,
         txid: signature,
       });
     }
   }, [publicKey, amount, sendTransaction, connection]);
-  //Component
-  const closeModal = () => <a onClick={() => setOpenSendTransaction(false)}
-    className="group mt-4 inline-flex h-10 w-10 items-center justify-center 
+
+  const closeModal = () => (
+    <a
+      onClick={() => setOpenSendTransaction(false)}
+      className="group mt-4 inline-flex h-10 w-10 items-center justify-center 
       rounded-lg bg-white/20 backdrop-blur-2xl transition-all duration-500 hover:bg-blue-600/60">
-    <i className="text-2xl text-white group-hover:text-white">
-      <AiOutlineClose />
-    </i>
-  </a>
+      <i className="text-2xl text-white group-hover:text-white">
+        <AiOutlineClose />
+      </i>
+    </a>
+  );
 
   return (
     <>
@@ -83,7 +82,7 @@ export const DonateView = ({ setOpenSendTransaction }) => {
           <div className="bg-default-950/40 mx-auto max-w-5xl overflow-hidden rounded-2xl backdrop-blur-2xl">
             <div className="grid gap-10 lg:grid-cols-2">
               {/* First */}
-              <Branding image="auth-img" title="تست" message="تست" />
+              <Branding image="auth-img" title="انتقال توکن" message="به هرکی دوست داری از توکن خودت هدیه بده !" />
               {/* Second */}
               <div className="lg:ps-0 flex h-full flex-col p-10">
                 <div className="pb-10">
@@ -94,11 +93,11 @@ export const DonateView = ({ setOpenSendTransaction }) => {
                 <div className="my-auto pb-6 text-center">
                   <h4 className="mb-4 text-2xl font-bold text-white">
                     {wallet && (
-                      <p>SOL Balance: {(balance || 0).toLocaleString()}</p>
+                      <p> موجودی شما :  {(balance || 0).toLocaleString()}</p>
                     )}
                   </h4>
                   <p className="text-default-300 mx-auto mb-5 max-w-sm">
-                    Award Test
+                    مقدار هدیه خود را مشخص کنید
                   </p>
                   <div className="flex items-start justify-center">
                     <img
@@ -109,9 +108,9 @@ export const DonateView = ({ setOpenSendTransaction }) => {
                   </div>
                   <div className="text-start">
                     <InputView
-                    name="Amount"
-                    placeholder="amount"
-                    clickhandle={(e) => setAmount(e.target.value) }
+                      name="مقدار توکن مورد نظر را به رقم وارد کنید"
+                      placeholder="مقدار"
+                      clickhandle={(e) => setAmount(e.target.value)}
                     />
                   </div>
                   <div className="mb-6 text-center">
@@ -120,7 +119,7 @@ export const DonateView = ({ setOpenSendTransaction }) => {
                       disabled={!publicKey}
                       className="bg-primary-600/90 hover:bg-primary-600 group mt-5 inline-flex w-full items-center justify-center rounded-lg
                             px-6 py-2 text-white backdrop-blur-2xl transition-all duration-500">
-                      <span className="fw-bold">Donate</span>
+                      <span className="fw-bold">ارسال | هــدیه</span>
                     </button>
                     {closeModal()} {/* Called the function */}
                   </div>
@@ -129,7 +128,9 @@ export const DonateView = ({ setOpenSendTransaction }) => {
             </div>
           </div>
         </div>
-      </section >
+      </section>
     </>
-  )
-}
+  );
+};
+
+export default DonateView;

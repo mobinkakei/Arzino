@@ -1,7 +1,15 @@
 import React, { FC } from "react";
 import { LuArrowLeftFromLine } from "react-icons/lu";
 
-export const FeatureView: FC = ({
+interface FeatureViewProps {
+  setOpenAirdrop: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenContact: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenSendTransaction: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenTokenMetaData: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const FeatureView: React.FC<FeatureViewProps> = ({
   setOpenAirdrop,
   setOpenContact,
   setOpenCreateModal,
@@ -29,7 +37,8 @@ export const FeatureView: FC = ({
       desc: "تو ارزینو نمیزاریم حقت خورده بشه و بهت کمک می کنم حساب و کتابت راست و ریس کنی ! 😊",
       function: setOpenTokenMetaData,
     },
-  ]
+  ];
+
   return (
     <section className="py-20">
       <div className="container">
@@ -48,7 +57,7 @@ export const FeatureView: FC = ({
           {feature.map((list, index) => (
             <div
               key={index}
-              className={`w-auto grow border-bborder-white/10 md:w-1/2 ${index == 0 ? "md:border-e"
+              className={`w-auto grow border-b border-white/10 md:w-1/2 ${index == 0 ? "md:border-e"
                 : index == 1
                   ? ""
                   : index == 2
@@ -60,7 +69,7 @@ export const FeatureView: FC = ({
                   {list.name}
                 </h2>
                 <p className="text-default-200 mb-6 text-base">{list.desc}</p>
-                <a onClick={() => list.function()} className="hover:bg-primary inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-6 py-2 text-white transition-all duration-300">
+                <a onClick={() => list.function(true)} className="hover:bg-primary inline-flex items-center justify-center gap-2 rounded-full border border-white/10 px-6 py-2 text-white transition-all duration-300">
                   شروع کن !
                   <i><LuArrowLeftFromLine/></i>
                 </a>
@@ -69,6 +78,8 @@ export const FeatureView: FC = ({
           ))}
         </div>
       </div>
-    </section >
+    </section>
   );
 };
+
+export default FeatureView;

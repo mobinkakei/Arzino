@@ -1,6 +1,14 @@
-import React, { FC } from 'react'
+import React, { FC } from 'react';
 
-const Branding: FC = ({ image, title, message }) => {
+// Define the type for the props
+interface BrandingProps {
+  image: string;
+  title: string;
+  message: string;
+}
+
+// Use the type in the functional component
+const Branding: FC<BrandingProps> = ({ image, title, message }) => {
   return (
     <div className="ps-4 hidden py-4 lg:block">
       <div className="relative h-full w-full overflow-hidden rounded-xl">
@@ -25,7 +33,7 @@ const Branding: FC = ({ image, title, message }) => {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default Branding
+export default Branding;

@@ -10,7 +10,7 @@ import {notify} from "../utils/notifications";
 import NotificationList from "./Notification";
 
 export const Footer: FC = () => {
-    const [state, handleSubmit] = useForm("mbjnzqoe");
+    const [state, handleSubmit] = useForm("xgvweqqn");
         if (state.succeeded) {
             notify({
                 type: "success",

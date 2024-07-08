@@ -29,7 +29,11 @@ import { ClipLoader } from "react-spinners";
 import Branding from "../../components/Branding";
 import { InputView } from "../index";
 
-export const CreateView: FC = ({ setOpenCreateModal }) => {
+interface CreateViewProps {
+  setOpenCreateModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const CreateView: FC<CreateViewProps> = ({ setOpenCreateModal }) => {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
   const { networkConfiguration } = useNetworkConfiguration();
@@ -331,3 +335,5 @@ export const CreateView: FC = ({ setOpenCreateModal }) => {
     )}
       </>
 }
+
+export default CreateView;
