@@ -26,6 +26,10 @@ Welcome to Arzino, your go-to solution for creating and managing blockchain toke
 
 To get started with Arzino, follow these simple steps:
 
+## Notice : 
+
+You have to install Node.js and npm first, also use need a web3 Wallet like MetaMask 
+
 1. **Clone the Repository:**
    ```
    git clone https://github.com/your_username/arzino.git
@@ -37,9 +41,15 @@ To get started with Arzino, follow these simple steps:
    npm install
    ```
 
+3. **Build Packages:**
+
+```
+npm run build
+```
+
 3. **Run the Development Server:**
    ```
-   npm start
+   npm run dev
    ```
 
 4. **Access Arzino:**
